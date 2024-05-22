@@ -4,9 +4,29 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 import RemoveButton from "./removebtn";
 
-export default function PatientsList() {
+const getPatients = async () => {
+    try{
+        const res = await fetch('http://localhost:3000/api/patients', {
+            cache: "no-store",
+        });
+
+        if(!res.ok) {
+            throw new Error("Failed to fetch patients");
+        }
+
+        return res.json();
+    }catch(error) {
+        console.log("Error loading patients: ", error)
+    }
+}
+
+export default async function PatientsList() {
+
+    const { patients } = await getPatients();
+
     return(
         <>
+        {patients.map((p) => (
             <table>
                 <thead>
                     <tr>
@@ -20,23 +40,24 @@ export default function PatientsList() {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>ID</td>
-                        <td>Disease</td>
-                        <td>Name</td>
-                        <td>Phone</td>
-                        <td>Created</td>
-                        <td>Updated</td>
+                        <td>{p._id}</td>
+                        <td>{p.disease}</td>
+                        <td>{p.name}</td>
+                        <td>{p.phone}</td>
+                        <td>{p.createdAt}</td>
+                        <td>{p.updatedAt}</td>
                         <td>
-                            <RemoveButton/>
+                            <RemoveButton id={p._id}/>
                         </td>
                         <td>
-                            <Link href={"/patients/editpatient/123"}>
+                            <Link href={`/patients/editpatient/${p._id}`}>
                                 <Icon icon="lucide:pencil" width="24" height="24"/>
                             </Link>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            ))}
         </>
     )
 }
