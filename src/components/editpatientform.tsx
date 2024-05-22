@@ -17,7 +17,7 @@ export default function EditPatientForm({id, disease, name, phone}) {
     e.preventDefault();
 
     try{
-      const res = await fetch(`http://localhost:3000/api/patients'${id}`, {
+      const res = await fetch(`http://localhost:3000/api/patients/${id}`, {
         method: "PUT",
         headers: {
           "Content-type": "application/json",

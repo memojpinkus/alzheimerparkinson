@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import connectMongoDB from "../../../../../libs/mongodb";
 import Patient from "../../../../../models/patient";
-import { stat } from "fs";
 
 export async function PUT(request, {params}){
     const { id } = params;
