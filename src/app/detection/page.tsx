@@ -78,27 +78,51 @@ const Detection = () => {
     <>
       <span className="font-bold text-4xl">Detection</span>
 
-      <div className="border-dashed border border-zinc-500 w-full h-auto rounded-lg">
-        <h1 className="m-xl">Instructions</h1>
-        <ol className="">
-          {!isSelected ? <li>Select User</li> : <></>}
+      <div className="border-dashed border border-zinc-500 w-full h-auto rounded-lg ">
+        <h1 className="text-1xl font-extrabold dark:text-white">
+          Instructions
+        </h1>
+        <ol className="my-4 text-lg text-gray-500">
+          {isSelected ? <li>Select User</li> : <></>}
           <li>Select Model</li>
           <li>Upload Image (up to 3 images)</li>
           <li>Wait for the loading to finish</li>
         </ol>
       </div>
-      <div className="border-dashed border border-zinc-500 w-full h-auto rounded-lg">
+      <div className="border-dashed border border-zinc-500 w-full h-auto rounded-lg  ">
         <form onSubmit={handleSubmit}>
-          <input
-            placeholder="User"
-            className="mb-2 p-2 border border-zinc-500 rounded"
-          />
-          <input
-            placeholder="Model"
-            className="mb-2 p-2 border border-zinc-500 rounded"
-          />
+          <div className="relative">
+            <input
+              type="text"
+              id="floating_outlined"
+              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+            />
+            <label
+              htmlFor="floating_outlined"
+              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            >
+              User
+            </label>
+          </div>
+          <div className="relative">
+            <label
+              htmlFor="countries"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Select model to start detection
+            </label>
+            <select
+              id="countries"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option defaultValue="">Choose a model</option>
+              <option value="AL">Alzheimer</option>
+              <option value="PA">Parkinson</option>
+            </select>
+          </div>
 
-          <div id="uploaders-container" className="flex flex-col gap-4">
+          <div id="uploaders-container" className="flex flex-row space-x-80">
             {files.map((_, index) => (
               <Uploader
                 key={index}
@@ -108,17 +132,17 @@ const Detection = () => {
             ))}
           </div>
 
+          <div
+            id="label-container"
+            className="mt-4 p-4 border border-gray-300 rounded flex space-x-80"
+          ></div>
           <button
             type="submit"
-            className="mt-2 p-2 bg-blue-500 text-white rounded"
+            className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
           >
             Submit
           </button>
         </form>
-        <div
-          id="label-container"
-          className="mt-4 p-4 border border-gray-300 rounded"
-        ></div>
       </div>
     </>
   );
