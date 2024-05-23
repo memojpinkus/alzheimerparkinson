@@ -26,7 +26,6 @@ export default async function PatientsList() {
 
     return(
         <>
-        {patients.map((p) => (
             <table>
                 <thead>
                     <tr>
@@ -39,7 +38,8 @@ export default async function PatientsList() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                {patients.map((p) => (
+                    <tr key={p._id}>
                         <td>{p._id}</td>
                         <td>{p.disease}</td>
                         <td>{p.name}</td>
@@ -54,10 +54,15 @@ export default async function PatientsList() {
                                 <Icon icon="lucide:pencil" width="24" height="24"/>
                             </Link>
                         </td>
+                        <td>
+                            <Link href={`/patients/viewpatient/${p._id}`}>
+                                <Icon icon="lucide:eye" width="24" height="24"/>
+                            </Link>
+                        </td>
                     </tr>
+                ))}    
                 </tbody>
             </table>
-            ))}
         </>
     )
 }

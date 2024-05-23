@@ -1,4 +1,5 @@
 import EditPatientForm from "@/components/editpatientform"
+import ViewPatient from "@/components/viewpatient";
 
 const getPatientById = async(id) => {
     try{
@@ -16,10 +17,10 @@ const getPatientById = async(id) => {
     }
 }
 
-export default async function EditPatient({ params }) {
+export default async function ViewPatientPage({ params }) {
     const {id} = params;
     const {patient} = await getPatientById(id);
     const {disease, name, phone} = patient;
     
-    return <EditPatientForm id={id} disease={disease} name={name} phone={phone}/>
+    return <ViewPatient id={id} disease={disease} name={name} phone={phone}/>
 }
