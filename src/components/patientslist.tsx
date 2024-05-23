@@ -20,53 +20,49 @@ const getPatients = async () => {
   }
 };
 
+// eslint-disable-next-line @next/next/no-async-client-component
 export default async function PatientsList() {
   const { patients } = await getPatients();
 
-    return(
-        <>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">ID</th>
-                            <th scope="col" className="px-6 py-3">Disease</th>
-                            <th scope="col" className="px-6 py-3">Name</th>
-                            <th scope="col" className="px-6 py-3">Phone</th>
-                            <th scope="col" className="px-6 py-3">Created</th>
-                            <th scope="col" className="px-6 py-3">Updated</th>
-                            <th scope="col" className="px-6 py-3"></th>
-                            <th scope="col" className="px-6 py-3"></th>
-                            <th scope="col" className="px-6 py-3"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {patients.map((p) => (
-                        <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" key={p._id}>
-                            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{p._id}</td>
-                            <td className="px-6 py-4">{p.disease}</td>
-                            <td className="px-6 py-4">{p.name}</td>
-                            <td className="px-6 py-4">{p.phone}</td>
-                            <td className="px-6 py-4">{p.createdAt}</td>
-                            <td className="px-6 py-4">{p.updatedAt}</td>
-                            <td className="px-6 py-4">
-                                <Link href={`/patients/editpatient/${p._id}`}>
-                                    <Icon icon="lucide:pencil" width="24" height="24"/>
-                                </Link>
-                            </td>
-                            <td className="px-6 py-4">
-                                <RemoveButton id={p._id}/>
-                            </td>
-                            <td className="px-6 py-4">
-                                <Link href={`/patients/viewpatient/${p._id}`}>
-                                    <Icon icon="lucide:eye" width="24" height="24"/>
-                                </Link>
-                            </td>
-                        </tr>
-                    ))}    
-                    </tbody>
-                </table>
-            </div>
-        </>
-    )
+  return (
+    <>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Disease</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Created</th>
+            <th>Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          {patients.map((p: any) => (
+            <tr key={p._id}>
+              <td>{p._id}</td>
+              <td>{p.disease}</td>
+              <td>{p.name}</td>
+              <td>{p.phone}</td>
+              <td>{p.createdAt}</td>
+              <td>{p.updatedAt}</td>
+              <td>
+                <RemoveButton id={p._id} />
+              </td>
+              <td>
+                <Link href={`/patients/editpatient/${p._id}`}>
+                  <Icon icon="lucide:pencil" width="24" height="24" />
+                </Link>
+              </td>
+              <td>
+                <Link href={`/patients/viewpatient/${p._id}`}>
+                  <Icon icon="lucide:eye" width="24" height="24" />
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
 }
