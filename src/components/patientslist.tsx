@@ -1,28 +1,27 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import RemoveButton from "./removebtn";
 
 const getPatients = async () => {
-    try{
-        const res = await fetch('http://localhost:3000/api/patients', {
-            cache: "no-store",
-        });
+  try {
+    const res = await fetch("http://localhost:3000/api/patients", {
+      cache: "no-store",
+    });
 
-        if(!res.ok) {
-            throw new Error("Failed to fetch patients");
-        }
-
-        return res.json();
-    }catch(error) {
-        console.log("Error loading patients: ", error)
+    if (!res.ok) {
+      throw new Error("Failed to fetch patients");
     }
-}
+
+    return res.json();
+  } catch (error) {
+    console.log("Error loading patients: ", error);
+  }
+};
 
 export default async function PatientsList() {
-
-    const { patients } = await getPatients();
+  const { patients } = await getPatients();
 
     return(
         <>
