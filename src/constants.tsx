@@ -9,16 +9,6 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         icon: <Icon icon="lucide:scan-line" width="24" height="24"/>,
     },
     {
-        title: "Get Started",
-        path: "/getstarted",
-        icon: <Icon icon="lucide:rocket" width="24" height="24"/>
-    },
-    {
-        title: "Dashboard",
-        path: "/",
-        icon: <Icon icon="lucide:home" width="24" height="24"/>,
-    },
-    {
         title: "Patients",
         path: "/patients",
         icon: <Icon icon="lucide:user" width="24" height="24"/>,
