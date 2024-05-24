@@ -1,13 +1,25 @@
 export default function Home() {
   return (
     <>
-      <span className="font-bold text-4xl">Home</span>
-      <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
+      <div style={styles.container}>
+        <h1 style={styles.welcomeText}>Parkinson and Alzheimer detector helper</h1>
+      </div>
     </>
   );
 }
+
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    backgroundColor: '#f0f0f0',
+    margin: 0,
+  },
+  welcomeText: {
+    fontSize: '64px',
+    color: '#333',
+    fontFamily: 'Arial, sans-serif',
+  },
+};

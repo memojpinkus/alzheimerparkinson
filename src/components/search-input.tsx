@@ -48,7 +48,7 @@ export default function PatientSearch({ onSelectPatient }) {
   };
 
   return (
-    <div>
+    <div style={{marginTop:'15px'}}>
       <form onSubmit={handleSearch}>
         <input
           type="text"
@@ -56,7 +56,7 @@ export default function PatientSearch({ onSelectPatient }) {
           onChange={handleInputChange}
           placeholder="Search for patients"
         />
-        <button type="submit">Search</button>
+        <button style={{marginLeft:"20px"}} type="submit">Search</button>
       </form>
       {closestMatch && <div>Closest Match: {closestMatch}</div>}
       <ul>

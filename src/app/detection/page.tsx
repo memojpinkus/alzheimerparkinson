@@ -143,28 +143,30 @@ const Detection = () => {
     <>
       <span className="font-bold text-4xl">Detection</span>
 
-      <div className="border-dashed border border-zinc-500 w-full h-auto rounded-lg ">
-        <h1 className="text-1xl font-extrabold dark:text-white">
-          Instructions
-        </h1>
-        <ol className="my-4 text-lg text-gray-500">
-          {selectedPatient ? (
-            <li>Selected User: {selectedPatient.name}</li>
-          ) : (
-            <li>Select User</li>
-          )}
-          <li>Select Model</li>
-          <li>Upload Image (up to 3 images)</li>
-          <li>Wait for the loading to finish</li>
-        </ol>
-      </div>
-      <div className="border-dashed border border-zinc-500 w-full h-auto rounded-lg  ">
+      <h1 className="text-1xl font-extrabold dark:text-white">
+        Instructions
+      </h1>
+      <ol className="my-4 text-lg text-gray-500">
+        {selectedPatient ? (
+          <li>Selected User: {selectedPatient.name}</li>
+        ) : (
+          <li>Select User</li>
+        )}
+        <li>Select Model</li>
+        <li>Upload Image (up to 3 images)</li>
+        <li>Wait for the loading to finish</li>
+      </ol>
+
+      <div style={{marginTop:"20px"}} className="flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
         <form onSubmit={handleSubmit}>
+          
           <div className="relative">
             <PatientSearch onSelectPatient={handleSelectPatient} />
           </div>
+
           <div className="relative">
             <label
+              style={{marginTop:"15px"}}
               htmlFor="countries"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
@@ -180,6 +182,13 @@ const Detection = () => {
             </select>
           </div>
 
+          <label 
+            style={{marginTop:"15px"}}
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" 
+            htmlFor="file_input">
+              Upload file
+          </label>
+          
           <div id="uploaders-container" className="flex flex-row space-x-80">
             {files.map((_, index) => (
               <Uploader
@@ -191,22 +200,26 @@ const Detection = () => {
           </div>
 
           <div
+            style={{marginTop:"20px"}}
             id="label-container"
             className="mt-4 p-4 border border-gray-300 rounded flex space-x-80"
           ></div>
+
           <button
             type="submit"
-            className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
-          >
-            Submit
+            style={{marginTop:"20px"}}
+            className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+              Submit
+          </button>
+
+          <button
+            onClick={handleUploadData}
+            className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-500 dark:focus:ring-green-800">
+              Upload Data
           </button>
         </form>
-        <button
-          onClick={handleUploadData}
-          className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-500 dark:focus:ring-green-800"
-        >
-          Upload Data
-        </button>
+
+        
       </div>
     </>
   );
