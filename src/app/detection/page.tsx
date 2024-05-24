@@ -1,7 +1,8 @@
-// src/app/Detection.tsx (or wherever your Detection component is located)
+// src/app/Detection.tsx
 "use client";
 
 import Uploader from "@/components/uploader";
+import PatientSearch from "@/components/search-input";
 import React, { useState, useEffect } from "react";
 import * as tmImage from "@teachablemachine/image";
 
@@ -9,8 +10,9 @@ const Detection = () => {
   const [files, setFiles] = useState<(File | null)[]>([null, null, null]);
   const [model, setModel] = useState<any | null>(null);
   const [maxPredictions, setMaxPredictions] = useState<number>(0);
+  const [predictions, setPredictions] = useState<any[]>([]);
   const URL = "https://teachablemachine.withgoogle.com/models/MjPyRRCJ9/";
-  const [isSelected, setIsSelected] = useState<Boolean>(false);
+  const [selectedPatient, setSelectedPatient] = useState(null);
 
   useEffect(() => {
     const loadModel = async () => {
@@ -31,6 +33,23 @@ const Detection = () => {
     setFiles(updatedFiles);
   };
 
+  const handlePredict = async (file: File) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const imageUrl = reader.result as string;
+        const img = document.createElement("img");
+        img.src = imageUrl;
+
+        img.onload = async () => {
+          const prediction = await model.predict(img);
+          resolve({ prediction, imageUrl });
+        };
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -41,72 +60,113 @@ const Detection = () => {
     ) as HTMLDivElement;
     labelContainer.innerHTML = ""; // Clear previous predictions
 
+    const allPredictions = [];
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = async () => {
-          const imageUrl = reader.result as string;
-          const img = document.createElement("img");
-          img.src = imageUrl;
+        const { prediction, imageUrl } = await handlePredict(file);
+        console.log(`Prediction results for image ${i + 1}:`, prediction); // Log the prediction result
 
-          img.onload = async () => {
-            const prediction = await model.predict(img);
-            console.log(`Prediction results for image ${i + 1}:`, prediction); // Log the prediction result
+        const formattedPrediction = prediction.map((p) => ({
+          className: p.className,
+          probability: p.probability,
+        }));
 
-            const predictionContainer = document.createElement("div");
-            predictionContainer.className = "file-result-container";
-            labelContainer.appendChild(predictionContainer);
+        allPredictions.push({ prediction: formattedPrediction, imageUrl });
 
-            for (let j = 0; j < maxPredictions; j++) {
-              const classPrediction =
-                prediction[j].className +
-                ": " +
-                prediction[j].probability.toFixed(2);
-              const p = document.createElement("p");
-              p.innerText = classPrediction;
-              predictionContainer.appendChild(p);
-            }
-          };
-        };
-        reader.readAsDataURL(file);
+        const predictionContainer = document.createElement("div");
+        predictionContainer.className = "file-result-container";
+        labelContainer.appendChild(predictionContainer);
+
+        for (let j = 0; j < maxPredictions; j++) {
+          const classPrediction =
+            prediction[j].className +
+            ": " +
+            prediction[j].probability.toFixed(2);
+          const p = document.createElement("p");
+          p.innerText = classPrediction;
+          predictionContainer.appendChild(p);
+        }
       }
     }
+
+    setPredictions(allPredictions);
+  };
+
+  const handleUploadData = async () => {
+    if (!selectedPatient) {
+      alert("Please select a patient first.");
+      return;
+    }
+
+    const data = {
+      patientId: selectedPatient._id,
+      predictions: predictions.map((p) => ({
+        predictions: p.prediction.map((pred) => ({
+          className: pred.className,
+          probability: pred.probability,
+        })),
+        image: {
+          data: p.imageUrl,
+          contentType: "image/png", // Or the correct content type
+        },
+      })),
+    };
+
+    try {
+      const res = await fetch("http://localhost:3000/api/patients/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        alert("Data uploaded successfully!");
+      } else {
+        alert("Failed to upload data: " + result.message);
+      }
+    } catch (error) {
+      console.error("Error uploading data:", error);
+      alert("Error uploading data. Please try again.");
+    }
+  };
+
+  const handleSelectPatient = (patient) => {
+    setSelectedPatient(patient);
   };
 
   return (
     <>
       <span className="font-bold text-4xl">Detection</span>
 
-      <div className="border-dashed border border-zinc-500 w-full h-auto rounded-lg ">
-        <h1 className="text-1xl font-extrabold dark:text-white">
-          Instructions
-        </h1>
-        <ol className="my-4 text-lg text-gray-500">
-          {isSelected ? <li>Select User</li> : <></>}
-          <li>Select Model</li>
-          <li>Upload Image (up to 3 images)</li>
-          <li>Wait for the loading to finish</li>
-        </ol>
-      </div>
-      <div className="border-dashed border border-zinc-500 w-full h-auto rounded-lg  ">
+      <h1 className="text-1xl font-extrabold dark:text-white">
+        Instructions
+      </h1>
+      <ol className="my-4 text-lg text-gray-500">
+        {selectedPatient ? (
+          <li>Selected User: {selectedPatient.name}</li>
+        ) : (
+          <li>Select User</li>
+        )}
+        <li>Select Model</li>
+        <li>Upload Image (up to 3 images)</li>
+        <li>Wait for the loading to finish</li>
+      </ol>
+
+      <div style={{marginTop:"20px"}} className="flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
         <form onSubmit={handleSubmit}>
+          
           <div className="relative">
-            <input
-              type="text"
-              id="floating_outlined"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-            />
-            <label
-              htmlFor="floating_outlined"
-              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-            >
-              User
-            </label>
+            <PatientSearch onSelectPatient={handleSelectPatient} />
           </div>
+
           <div className="relative">
             <label
+              style={{marginTop:"15px"}}
               htmlFor="countries"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
@@ -122,6 +182,13 @@ const Detection = () => {
             </select>
           </div>
 
+          <label 
+            style={{marginTop:"15px"}}
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" 
+            htmlFor="file_input">
+              Upload file
+          </label>
+          
           <div id="uploaders-container" className="flex flex-row space-x-80">
             {files.map((_, index) => (
               <Uploader
@@ -133,16 +200,26 @@ const Detection = () => {
           </div>
 
           <div
+            style={{marginTop:"20px"}}
             id="label-container"
             className="mt-4 p-4 border border-gray-300 rounded flex space-x-80"
           ></div>
+
           <button
             type="submit"
-            className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
-          >
-            Submit
+            style={{marginTop:"20px"}}
+            className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+              Submit
+          </button>
+
+          <button
+            onClick={handleUploadData}
+            className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-500 dark:focus:ring-green-800">
+              Upload Data
           </button>
         </form>
+
+        
       </div>
     </>
   );
