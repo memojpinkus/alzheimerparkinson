@@ -6,19 +6,47 @@ import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 
 const AddPatient = () => {
-  const [disease, setDisease] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [apellidoPaterno, setApellidoPaterno] = useState("");
+  const [apellidoMaterno, setApellidoMaterno] = useState("");
+  const [fechaDeNacimiento, setFechaDeNacimiento] = useState("");
+  const [lugarDeNacimiento, setLugarDeNacimiento] = useState("");
+  const [estatura, setEstatura] = useState("");
+  const [peso, setPeso] = useState("");
+  const [curp, setCurp] = useState("");
+  const [ocupacion, setOcupacion] = useState("");
+  const [calle, setCalle] = useState("");
+  const [ciudad, setCiudad] = useState("");
+  const [estado, setEstado] = useState("");
+  const [colonia, setColonia] = useState("");
+  const [codigoPostal, setCodigoPostal] = useState("");
+  const [email, setEmail] = useState("");
+  const [nombreFamiliar, setNombreFamiliar] = useState("");
+  const [phoneFamiliar, setPhoneFamiliar] = useState("");
+  const [emailFamiliar, setEmailFamiliar] = useState("");
+  const [estadoCivil, setEstadoCivil] = useState("");
+  const [genero, setGenero] = useState("");
+  const [educacion, setEducacion] = useState("");
+  const [tabaco, setTabaco] = useState("");
+  const [alcohol, setAlcohol] = useState("");
+  const [drogas, setDrogas] = useState("");
+  const [actividad, setActividad] = useState("");
+  const [enfermedadCronica, setEnfermedadCronica] = useState("");
+  const [alergias, setAlergias] = useState("");
+  const [cirugias, setCirugias] = useState("");
+  const [trastornos, setTrastornos] = useState("");
+  const [cancer, setCancer] = useState("");
+  const [hipertension, setHipertension] = useState("");
+  const [diabetes, setDiabetes] = useState("");
+  const [cancerF, setCancerF] = useState("");
+  const [asma, setAsma] = useState("");
+  const [enfermedadN, setEnfermedadN] = useState("");
 
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!disease || !name || !phone) {
-      alert("Possible disease, patient name and phone number required.");
-      return;
-    }
 
     try {
       const res = await fetch("http://localhost:3000/api/patients", {
@@ -26,7 +54,44 @@ const AddPatient = () => {
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({ disease, name, phone }),
+        body: JSON.stringify({ 
+            name,
+            apellidoPaterno,
+            apellidoMaterno,
+            fechaDeNacimiento,
+            lugarDeNacimiento,
+            genero,
+            estatura,
+            peso,
+            curp,
+            estadoCivil,
+            educacion,
+            ocupacion,
+            ciudad,
+            estado,
+            calle,
+            colonia,
+            codigoPostal,
+            phone,
+            email,
+            nombreFamiliar,
+            phoneFamiliar,
+            emailFamiliar,
+            tabaco,
+            alcohol,
+            drogas,
+            actividad,
+            enfermedadCronica,
+            alergias,
+            cirugias,
+            trastornos,
+            cancer,
+            hipertension,
+            diabetes,
+            cancerF,
+            asma,
+            enfermedadN,
+        }),
       });
 
       if (res.ok) {
@@ -64,8 +129,8 @@ const AddPatient = () => {
               Nombre(s)
             </label>
             <input
-              // onChange={(e) => setName(e.target.value)}
-              // value={name}
+              onChange={(e) => setName(e.target.value)}
+              value={name}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
               placeholder="Nombre(s)"
@@ -78,8 +143,8 @@ const AddPatient = () => {
               Apellido paterno
             </label>
             <input
-              // onChange={(e) => setName(e.target.value)}
-              // value={name}
+              onChange={(e) => setApellidoPaterno(e.target.value)}
+              value={apellidoPaterno}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
               placeholder="Apellido paterno"
@@ -92,8 +157,8 @@ const AddPatient = () => {
               Apellido materno
             </label>
             <input
-              // onChange={(e) => setName(e.target.value)}
-              // value={name}
+              onChange={(e) => setApellidoMaterno(e.target.value)}
+              value={apellidoMaterno}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
               placeholder="Apellido materno"
@@ -106,8 +171,8 @@ const AddPatient = () => {
               Fecha de nacimiento
             </label>
             <input
-              // onChange={(e) => setName(e.target.value)}
-              // value={name}
+              onChange={(e) => setFechaDeNacimiento(e.target.value)}
+              value={fechaDeNacimiento}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="date"
               placeholder="Fecha de nacimiento"
@@ -120,8 +185,8 @@ const AddPatient = () => {
               Lugar de nacimiento
             </label>
             <input
-              // onChange={(e) => setName(e.target.value)}
-              // value={name}
+              onChange={(e) => setLugarDeNacimiento(e.target.value)}
+              value={lugarDeNacimiento}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
               placeholder="Lugar de nacimiento"
@@ -133,11 +198,16 @@ const AddPatient = () => {
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Género
             </label>
-            <select name="gender" id="gender" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
-              <option value="masculino">Masculino</option>
-              <option value="femenino">Femenino</option>
-              <option value="ninguno">Prefiero no decir</option>
+            <select 
+                onChange={(e) => setGenero(e.target.value)}
+                value={genero}
+                name="gender" 
+                id="gender" 
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+              <option value="Ninguno">Prefiero no decir</option>
             </select>
           </div>
 
@@ -146,8 +216,8 @@ const AddPatient = () => {
               Estatura (cm)
             </label>
             <input
-              // onChange={(e) => setName(e.target.value)}
-              // value={name}
+              onChange={(e) => setEstatura(e.target.value)}
+              value={estatura}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
               placeholder="Estatura (cm)"
@@ -160,8 +230,8 @@ const AddPatient = () => {
               Peso (kg)
             </label>
             <input
-              // onChange={(e) => setName(e.target.value)}
-              // value={name}
+              onChange={(e) => setPeso(e.target.value)}
+              value={peso}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
               placeholder="Peso (kg)"
@@ -188,8 +258,8 @@ const AddPatient = () => {
                 CURP
             </label>
             <input
-                // onChange={(e) => setName(e.target.value)}
-                // value={name}
+                onChange={(e) => setCurp(e.target.value)}
+                value={curp}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 type="text"
                 placeholder="CURP"
@@ -201,12 +271,17 @@ const AddPatient = () => {
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Estado civil
             </label>
-            <select name="estadoCivil" id="estadoCivil" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            <select 
+                onChange={(e) => setEstadoCivil(e.target.value)}
+                value={estadoCivil} 
+                name="estadoCivil" 
+                id="estadoCivil" 
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                <option value="solterx">Soltero(a)</option>
-                <option value="casadx">Casado(a)</option>
-                <option value="divorciadx">Divorciado(a)</option>
-                <option value="viudx">Viudo(a)</option>
+                <option value="Solterx">Soltero(a)</option>
+                <option value="Casadx">Casado(a)</option>
+                <option value="Divorciadx">Divorciado(a)</option>
+                <option value="Viudx">Viudo(a)</option>
             </select>
           </div>
 
@@ -214,7 +289,10 @@ const AddPatient = () => {
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Nivel de educación máxima
             </label>
-            <select name="educacion" id="educacion" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            <select 
+                onChange={(e) => setEducacion(e.target.value)}
+                value={educacion}
+                name="educacion" id="educacion" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                 <option value="sinEducacion">Sin educación</option>
                 <option value="primaria">Primaria</option>
@@ -232,8 +310,8 @@ const AddPatient = () => {
                 Ocupación
             </label>
             <input
-                // onChange={(e) => setName(e.target.value)}
-                // value={name}
+                onChange={(e) => setOcupacion(e.target.value)}
+                value={ocupacion}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 type="text"
                 placeholder="Ocupación"
@@ -249,8 +327,8 @@ const AddPatient = () => {
               <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="mb-6">
                       <input
-                      // onChange={(e) => setName(e.target.value)}
-                      // value={name}
+                      onChange={(e) => setCiudad(e.target.value)}
+                      value={ciudad}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       type="text"
                       placeholder="Ciudad"
@@ -260,8 +338,8 @@ const AddPatient = () => {
 
                   <div className="mb-6">
                       <input
-                      // onChange={(e) => setName(e.target.value)}
-                      // value={name}
+                      onChange={(e) => setEstado(e.target.value)}
+                      value={estado}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       type="text"
                       placeholder="Estado"
@@ -271,8 +349,8 @@ const AddPatient = () => {
               </div>
               <div className="mb-6">
                   <input
-                  // onChange={(e) => setName(e.target.value)}
-                  // value={name}
+                  onChange={(e) => setCalle(e.target.value)}
+                  value={calle}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   type="text"
                   placeholder="Calle"
@@ -282,8 +360,8 @@ const AddPatient = () => {
               <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="mb-6">
                       <input
-                      // onChange={(e) => setName(e.target.value)}
-                      // value={name}
+                      onChange={(e) => setColonia(e.target.value)}
+                      value={colonia}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       type="text"
                       placeholder="Colonia"
@@ -293,8 +371,8 @@ const AddPatient = () => {
 
                   <div className="mb-6">
                       <input
-                      // onChange={(e) => setName(e.target.value)}
-                      // value={name}
+                      onChange={(e) => setCodigoPostal(e.target.value)}
+                      value={codigoPostal}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       type="text"
                       placeholder="Código Postal"
@@ -311,8 +389,8 @@ const AddPatient = () => {
 
               <div className="mb-6">
                   <input
-                  // onChange={(e) => setPhone(e.target.value)}
-                  // value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  value={phone}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   type="text"
                   placeholder="Teléfono"
@@ -322,8 +400,8 @@ const AddPatient = () => {
 
               <div className="mb-6">
                   <input
-                  // onChange={(e) => setName(e.target.value)}
-                  // value={name}
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   type="text"
                   placeholder="Correo electrónico"
@@ -339,8 +417,8 @@ const AddPatient = () => {
 
               <div className="mb-6">
                   <input
-                  // onChange={(e) => setPhone(e.target.value)}
-                  // value={phone}
+                  onChange={(e) => setNombreFamiliar(e.target.value)}
+                  value={nombreFamiliar}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   type="text"
                   placeholder="Nombre completo"
@@ -350,8 +428,8 @@ const AddPatient = () => {
 
               <div className="mb-6">
                   <input
-                  // onChange={(e) => setPhone(e.target.value)}
-                  // value={phone}
+                  onChange={(e) => setPhoneFamiliar(e.target.value)}
+                  value={phoneFamiliar}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   type="text"
                   placeholder="Teléfono"
@@ -361,8 +439,8 @@ const AddPatient = () => {
 
               <div className="mb-6">
                   <input
-                  // onChange={(e) => setName(e.target.value)}
-                  // value={name}
+                  onChange={(e) => setEmailFamiliar(e.target.value)}
+                  value={emailFamiliar}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   type="text"
                   placeholder="Correo electrónico"
@@ -382,19 +460,20 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="tabaco-1" type="radio" name="tabaco" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input 
+                        onChange={(e) => setTabaco(e.target.value)} id="tabaco-1" type="radio" name="tabaco" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="tabaco-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="tabaco-2" type="radio" name="tabaco" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setTabaco(e.target.value)} id="tabaco-2" type="radio" name="tabaco" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="tabaco-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="tabaco-3" type="radio" name="tabaco" value="suspendido" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setTabaco(e.target.value)} id="tabaco-3" type="radio" name="tabaco" value="suspendido" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="tabaco-3" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Suspendido
                       </label>
@@ -409,19 +488,19 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="alcohol-1" type="radio" name="alcohol" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setAlcohol(e.target.value)} id="alcohol-1" type="radio" name="alcohol" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="alcohol-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="alcohol-2" type="radio" name="alcohol" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setAlcohol(e.target.value)} id="alcohol-2" type="radio" name="alcohol" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="alcohol-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="alcohol-3" type="radio" name="alcohol" value="suspendido" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setAlcohol(e.target.value)} id="alcohol-3" type="radio" name="alcohol" value="suspendido" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="alcohol-3" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Suspendido
                       </label>
@@ -432,17 +511,17 @@ const AddPatient = () => {
           <fieldset>
               <legend className="sr-only">Consumes drogas?</legend>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Consumes alcohol?
+                  Consumes drogas?
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="drogas-1" type="radio" name="drogas" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setDrogas(e.target.value)} id="drogas-1" type="radio" name="drogas" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="drogas-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="drogas-2" type="radio" name="drogas" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setDrogas(e.target.value)}  id="drogas-2" type="radio" name="drogas" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="drogas-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -457,13 +536,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="actividad-1" type="radio" name="actividad" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setActividad(e.target.value)}  id="actividad-1" type="radio" name="actividad" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="actividad-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="actividad-2" type="radio" name="actividad" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setActividad(e.target.value)}  id="actividad-2" type="radio" name="actividad" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="actividad-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -482,13 +561,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="enfermedad-cronica-1" type="radio" name="enfermedad-cronica" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setEnfermedadCronica(e.target.value)}  id="enfermedad-cronica-1" type="radio" name="enfermedad-cronica" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="enfermedad-cronica-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="enfermedad-cronica-2" type="radio" name="enfermedad-cronica" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setEnfermedadCronica(e.target.value)} id="enfermedad-cronica-2" type="radio" name="enfermedad-cronica" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="enfermedad-cronica-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -503,13 +582,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="alergias-1" type="radio" name="alergias" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setAlergias(e.target.value)} id="alergias-1" type="radio" name="alergias" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="alergias-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="alergias-2" type="radio" name="alergias" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setAlergias(e.target.value)} id="alergias-2" type="radio" name="alergias" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="alergias-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -524,13 +603,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="cirugias-1" type="radio" name="cirugias" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setCirugias(e.target.value)} id="cirugias-1" type="radio" name="cirugias" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="cirugias-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="cirugias-2" type="radio" name="cirugias" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setCirugias(e.target.value)} id="cirugias-2" type="radio" name="cirugias" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="cirugias-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -545,13 +624,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="trastornos-1" type="radio" name="trastornos" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setTrastornos(e.target.value)} id="trastornos-1" type="radio" name="trastornos" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="trastornos-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="trastornos-2" type="radio" name="trastornos" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setTrastornos(e.target.value)} id="trastornos-2" type="radio" name="trastornos" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="trastornos-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -566,13 +645,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="cancer-1" type="radio" name="cancer" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setCancer(e.target.value)} id="cancer-1" type="radio" name="cancer" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="cancer-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="cancer-2" type="radio" name="cancer" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setCancer(e.target.value)}  id="cancer-2" type="radio" name="cancer" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="cancer-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -591,13 +670,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="hipertension-1" type="radio" name="hipertension" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setHipertension(e.target.value)} id="hipertension-1" type="radio" name="hipertension" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="hipertension-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="hipertension-2" type="radio" name="hipertension" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setHipertension(e.target.value)} id="hipertension-2" type="radio" name="hipertension" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="hipertension-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -612,13 +691,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="diabetes-1" type="radio" name="diabetes" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setDiabetes(e.target.value)} id="diabetes-1" type="radio" name="diabetes" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="diabetes-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="diabetes-2" type="radio" name="diabetes" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setDiabetes(e.target.value)} id="diabetes-2" type="radio" name="diabetes" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="diabetes-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -633,13 +712,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="cancerf-1" type="radio" name="cancerf" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setCancerF(e.target.value)} id="cancerf-1" type="radio" name="cancerf" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="cancerf-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="cancerf-2" type="radio" name="cancerf" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setCancerF(e.target.value)} id="cancerf-2" type="radio" name="cancerf" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="cancerf-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -654,13 +733,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="asma-1" type="radio" name="asma" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setAsma(e.target.value)} id="asma-1" type="radio" name="asma" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="asma-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="asma-2" type="radio" name="asma" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setAsma(e.target.value)} id="asma-2" type="radio" name="asma" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="asma-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
@@ -675,13 +754,13 @@ const AddPatient = () => {
               </label>
               <div className="flex">
                   <div className="flex items-center mb-4">
-                      <input id="neurodegenerativas-1" type="radio" name="neurodegenerativas" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setEnfermedadN(e.target.value)} id="neurodegenerativas-1" type="radio" name="neurodegenerativas" value="si" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="neurodegenerativas-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           Si
                       </label>
                   </div>
                   <div className="flex items-center mb-4">
-                      <input id="neurodegenerativas-2" type="radio" name="neurodegenerativas" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
+                      <input onChange={(e) => setEnfermedadN(e.target.value)} id="neurodegenerativas-2" type="radio" name="neurodegenerativas" value="no" className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="neurodegenerativas-2" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
                           No
                       </label>
