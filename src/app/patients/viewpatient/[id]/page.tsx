@@ -19,14 +19,85 @@ const getPatientById = async (id) => {
 export default async function ViewPatientPage({ params }) {
   const { id } = params;
   const { patient } = await getPatientById(id);
-  const { disease, name, phone, predictions, img } = patient;
+  const { 
+    name, 
+    apellidoPaterno,
+    apellidoMaterno,
+    fechaDeNacimiento,
+    lugarDeNacimiento,
+    genero,
+    estatura,
+    peso,
+    curp,
+    estadoCivil,
+    educacion,
+    ocupacion,
+    ciudad,
+    estado,
+    calle,
+    colonia,
+    codigoPostal,
+    phone,
+    email,
+    nombreFamiliar,
+    phoneFamiliar,
+    emailFamiliar,
+    tabaco,
+    alcohol,
+    drogas,
+    actividad,
+    enfermedadCronica,
+    alergias,
+    cirugias,
+    trastornos,
+    cancer,
+    hipertension,
+    diabetes,
+    cancerF,
+    asma,
+    enfermedadN, 
+    predictions, 
+    img } = patient;
 
   return (
     <ViewPatient
       id={id}
-      disease={disease}
       name={name}
+      apellidoPaterno={apellidoPaterno}
+      apellidoMaterno={apellidoMaterno}
+      fechaDeNacimiento={fechaDeNacimiento}
+      lugarDeNacimiento={lugarDeNacimiento}
+      genero={genero}
+      estatura={estatura}
+      peso={peso}
+      curp={curp}
+      estadoCivil={estadoCivil}
+      educacion={educacion}
+      ocupacion={ocupacion}
+      ciudad={ciudad}
+      estado={estado}
+      calle={calle}
+      colonia={colonia}
+      codigoPostal={codigoPostal}
       phone={phone}
+      email={email}
+      nombreFamiliar={nombreFamiliar}
+      phoneFamiliar={phoneFamiliar}
+      emailFamiliar={emailFamiliar}
+      tabaco={tabaco}
+      alcohol={alcohol}
+      drogas={drogas}
+      actividad={actividad}
+      enfermedadCronica={enfermedadCronica}
+      alergias={alergias}
+      cirugias={cirugias}
+      trastornos={trastornos}
+      cancer={cancer}
+      hipertension={hipertension}
+      diabetes={diabetes}
+      cancerF={cancerF}
+      asma={asma}
+      enfermedadN={enfermedadN}
       predictions={predictions}
     />
   );
