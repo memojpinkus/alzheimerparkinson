@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import LabInformation from "./LabInformation";
+import LabInformation from "./labinformation";
 import Evaluation from "./evaluation";
+
 export default function ViewPatient({ id, disease, name, phone, predictions }) {
   const [activeTab, setActiveTab] = useState("patientInfo");
-  const [labData, setLabData] = useState([]);
+  const [labData, setLabData] = useState<LabData[]>([]);
 
   useEffect(() => {
     // Transform predictions into the format needed for labData
@@ -20,13 +21,11 @@ export default function ViewPatient({ id, disease, name, phone, predictions }) {
     setLabData(transformedData);
   }, [predictions]);
 
-  const handlePredict = (index) => {
-    // Implement prediction logic here
-    console.log(`Predicting for index: ${index}`);
+  const handleUpdateLabData = (updatedLabData) => {
+    setLabData(updatedLabData);
   };
 
   const handleDelete = (index) => {
-    // Implement delete logic here
     setLabData(labData.filter((_, i) => i !== index));
   };
 
@@ -111,7 +110,7 @@ export default function ViewPatient({ id, disease, name, phone, predictions }) {
         {activeTab === "labInfo" && (
           <LabInformation
             labData={labData}
-            onPredict={handlePredict}
+            onUpdateLabData={handleUpdateLabData}
             onDelete={handleDelete}
           />
         )}
