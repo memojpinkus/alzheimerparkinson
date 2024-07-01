@@ -11,9 +11,11 @@
   "dependencies": {
     "@iconify/react": "^4.1.1",
     "@teachablemachine/image": "^0.8.5",
+    "aws-sdk": "^2.1646.0",
     "clsx": "^2.1.1",
     "encoding": "^0.1.13",
     "flowbite": "^2.3.0",
+    "flowbite-react": "^0.10.1",
     "framer-motion": "^11.2.4",
     "mongodb": "^6.6.2",
     "mongoose": "^8.4.0",

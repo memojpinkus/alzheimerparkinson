@@ -9,12 +9,14 @@ interface LabData {
 
 interface LabInformationProps {
   labData: LabData[];
+  patientId: string;
   onUpdateLabData: (updatedLabData: LabData[]) => void;
   onDelete: (index: number) => void;
 }
 
 export default function LabInformation({
   labData,
+  patientId,
   onUpdateLabData,
   onDelete,
 }: LabInformationProps) {
@@ -22,16 +24,17 @@ export default function LabInformation({
   const [selectedFileIndex, setSelectedFileIndex] = useState<number | null>(
     null
   );
-  const placeholderImage = "https://via.placeholder.com/150";
+  const [fileToPredict, setFileToPredict] = useState<File | null>(null);
 
   const handleUploadClick = () => {
-    setSelectedFileIndex(labData.length);
+    setSelectedFileIndex(labData.length); // Prepare to add a new entry
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
     setSelectedFileIndex(null);
+    setFileToPredict(null);
   };
 
   const handleFileUpload = (file: File) => {
@@ -45,54 +48,89 @@ export default function LabInformation({
       };
       onUpdateLabData(updatedLabData);
     }
+    setFileToPredict(file);
     setShowModal(false);
   };
 
   const handlePredictClick = (index: number) => {
     setSelectedFileIndex(index);
-    setShowModal(true);
+    const fileUrl = labData[index].image;
+    if (fileUrl) {
+      fetch(fileUrl)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = new File([blob], labData[index].fileName, {
+            type: blob.type,
+          });
+          setFileToPredict(file);
+          setShowModal(true);
+        });
+    }
   };
 
-  const handlePredictions = async (newPredictions: any[]) => {
-    if (selectedFileIndex !== null && newPredictions.length > 0) {
+  const handlePredictions = async (newPredictions: any) => {
+    console.log("Predictions received:", newPredictions); // Console log the predictions
+
+    if (selectedFileIndex !== null) {
       const updatedLabData = [...labData];
-      const prediction = newPredictions[0].prediction
-        .map((pred) => `${pred.className}: ${pred.probability.toFixed(2)}`)
+      const prediction = newPredictions
+        .map((pred: any) => `${pred.className}: ${pred.probability.toFixed(2)}`)
         .join(", ");
       updatedLabData[selectedFileIndex].prediction = prediction;
       onUpdateLabData(updatedLabData);
 
-      // Upload the prediction to MongoDB
-      const data = {
-        patientId: id, // Assuming `id` is available in scope
-        predictions: newPredictions[0].prediction,
-      };
+      // Convert file to Base64
+      const file = fileToPredict!;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        const base64data = reader.result;
 
-      try {
-        const res = await fetch("http://localhost:3000/api/patients/upload", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+        // Format data for MongoDB
+        const formattedPredictions = newPredictions.map((pred: any) => ({
+          predictions: [pred],
+          image: base64data,
+        }));
+
+        // Log data being sent to the API
+        console.log("Data being sent to API:", {
+          patientId,
+          predictions: formattedPredictions,
         });
 
-        if (res.ok) {
-          console.log("Prediction uploaded successfully!");
-        } else {
-          const result = await res.json();
-          console.error("Failed to upload prediction:", result.message);
-        }
-      } catch (error) {
-        console.error("Error uploading prediction:", error);
-      }
+        // Upload the prediction to MongoDB
+        const data = {
+          patientId,
+          predictions: formattedPredictions,
+        };
 
-      setShowModal(false);
+        try {
+          const res = await fetch("/api/patients/upload", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (res.ok) {
+            console.log("Prediction uploaded successfully!");
+          } else {
+            const result = await res.json();
+            console.error("Failed to upload prediction:", result.message);
+          }
+        } catch (error) {
+          console.error("Error uploading prediction:", error);
+        }
+
+        setShowModal(false);
+        setFileToPredict(null);
+      };
     }
   };
 
   return (
-    <div>
+    <div className="flex flex-col h-full w-full">
       <h2 className="text-xl font-bold mb-4">Lab Information</h2>
       <button
         onClick={handleUploadClick}
@@ -100,55 +138,57 @@ export default function LabInformation({
       >
         Upload Image
       </button>
-      <table className="min-w-full bg-white">
-        <thead>
-          <tr>
-            <th className="py-2">Image</th>
-            <th className="py-2">File Name</th>
-            <th className="py-2">Prediction</th>
-            <th className="py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {labData.map((data, index) => (
-            <tr key={index} className="border-t">
-              <td className="py-2">
-                <img
-                  src={data.image || placeholderImage}
-                  alt={data.fileName}
-                  className="h-16 w-16 object-cover"
-                />
-              </td>
-              <td className="py-2">{data.fileName}</td>
-              <td className="py-2">{data.prediction}</td>
-              <td className="py-2 space-x-2">
-                <button
-                  onClick={() => handlePredictClick(index)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded"
-                >
-                  Predict
-                </button>
-                <button
-                  onClick={() => onDelete(index)}
-                  className="bg-red-500 text-white px-4 py-2 rounded"
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white">
+          <thead>
+            <tr>
+              <th className="py-2">Image</th>
+              <th className="py-2">File Name</th>
+              <th className="py-2">Prediction</th>
+              <th className="py-2">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {labData.map((data, index) => (
+              <tr key={index} className="border-t">
+                <td className="py-2">
+                  <img
+                    src={data.image || "https://via.placeholder.com/150"}
+                    alt={data.fileName}
+                    className="h-16 w-16 object-cover"
+                  />
+                </td>
+                <td className="py-2">{data.fileName}</td>
+                <td className="py-2">{data.prediction}</td>
+                <td className="py-2 flex space-x-2 align-middle justify-center">
+                  <button
+                    onClick={() => handlePredictClick(index)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                  >
+                    Predict
+                  </button>
+                  <button
+                    onClick={() => onDelete(index)}
+                    className="bg-red-500 text-white px-4 py-2 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      {showModal && selectedFileIndex !== null && (
+      {showModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded shadow-lg">
-            {labData[selectedFileIndex] && labData[selectedFileIndex].image ? (
+            {fileToPredict ? (
               <>
                 <h2 className="text-xl font-bold mb-4">Predict Image</h2>
                 <Detection
                   onPredictions={handlePredictions}
-                  file={labData[selectedFileIndex].image}
+                  file={fileToPredict}
                 />
               </>
             ) : (
