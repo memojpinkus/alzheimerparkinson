@@ -1,15 +1,23 @@
 import React, { useEffect } from "react";
 import * as tmImage from "@teachablemachine/image";
 
-const Detection = ({ onPredictions, file }) => {
-  const URL = "https://teachablemachine.withgoogle.com/models/MjPyRRCJ9/";
+interface DetectionProps {
+  onPredictions: (predictions: any[]) => void;
+  file: File;
+  modelURL: string; // Accept the model URL as a prop
+}
 
+const Detection: React.FC<DetectionProps> = ({
+  onPredictions,
+  file,
+  modelURL,
+}) => {
   useEffect(() => {
     const loadModel = async () => {
-      const modelURL = URL + "model.json";
-      const metadataURL = URL + "metadata.json";
+      const modelURLWithFile = modelURL + "model.json";
+      const metadataURL = modelURL + "metadata.json";
 
-      const model = await tmImage.load(modelURL, metadataURL);
+      const model = await tmImage.load(modelURLWithFile, metadataURL);
       if (file) {
         const img = new Image();
         const reader = new FileReader();
@@ -26,7 +34,7 @@ const Detection = ({ onPredictions, file }) => {
     };
 
     loadModel();
-  }, [file, onPredictions]);
+  }, [file, onPredictions, modelURL]);
 
   return null;
 };

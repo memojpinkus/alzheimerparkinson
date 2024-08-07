@@ -18,7 +18,6 @@ const uploadImageWithRetry = async (file, retries = 5) => {
   const params = {
     Bucket: process.env.AWS_S3_BUCKET,
     Key: `${Date.now()}_${file.name}`, // File name you want to save as in S3
-    Body: file,
     ContentType: file.type,
   };
 
@@ -26,6 +25,8 @@ const uploadImageWithRetry = async (file, retries = 5) => {
     const arrayBuffer = await blob.arrayBuffer();
     return Buffer.from(arrayBuffer);
   };
+
+  console.log("Uploading image with parameters:", params);
 
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {

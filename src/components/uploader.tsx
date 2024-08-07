@@ -1,7 +1,6 @@
-// src/components/Uploader.tsx
 "use client";
 
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent } from "react";
 import Image from "next/image";
 
 interface UploaderProps {
@@ -39,10 +38,6 @@ const Uploader: React.FC<UploaderProps> = ({ onFileChange, id }) => {
       />
       {selectedFile && (
         <div className="mt-4">
-          <div
-            id={`prediction-container-${id}`}
-            className="prediction-container"
-          ></div>
           {imageUrl && (
             <Image
               src={imageUrl}

@@ -45,7 +45,7 @@ export async function PUT(request, { params }) {
 
   await connectMongoDB();
 
-  await Patient.findByIdAndUpdate(id, { 
+  await Patient.findByIdAndUpdate(id, {
     name,
     apellidoPaterno,
     apellidoMaterno,
@@ -81,9 +81,9 @@ export async function PUT(request, { params }) {
     diabetes,
     cancerF,
     asma,
-    enfermedadN, 
+    enfermedadN,
   });
-  
+
   return NextResponse.json({ message: "Patient updated" }, { status: 200 });
 }
 

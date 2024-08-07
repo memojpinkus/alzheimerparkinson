@@ -11,14 +11,13 @@ interface Prediction {
 }
 
 interface ImageData {
-  data: string;
+  url: string;
   contentType: string;
 }
 
 interface LabData {
-  image: string | null;
-  fileName: string;
-  prediction: string;
+  predictions: Prediction[];
+  images: ImageData[];
 }
 
 interface ViewPatientProps {
@@ -59,44 +58,19 @@ interface ViewPatientProps {
   cancerF: string;
   asma: string;
   enfermedadN: string;
-  predictions: { predictions: Prediction[]; images: ImageData[] }[];
+  predictions: LabData[];
 }
 
 export default function ViewPatient(props: ViewPatientProps) {
   const [activeTab, setActiveTab] = useState("patientInfo");
-  const [labData, setLabData] = useState<LabData[]>([]);
-
-  useEffect(() => {
-    // Log predictions data
-    console.log("Predictions data:", props.predictions);
-
-    // Transform predictions into the format needed for labData
-    const transformedData: LabData[] = props.predictions.map(
-      (predictionData, index) => ({
-        image:
-          predictionData.images &&
-          predictionData.images.length > 0 &&
-          predictionData.images[0]
-            ? predictionData.images[0].data
-            : null, // Use the first image if available
-        fileName: `Prediction ${index + 1}`,
-        prediction: predictionData.predictions
-          .map((p) => `${p.className}: ${p.probability.toFixed(2)}`)
-          .join(", "),
-      })
-    );
-
-    console.log("Transformed data:", transformedData);
-
-    setLabData(transformedData);
-  }, [props.predictions]);
+  const [labData, setLabData] = useState(props.predictions);
 
   const handleUpdateLabData = (updatedLabData: LabData[]) => {
     setLabData(updatedLabData);
   };
 
-  const handleDelete = (index: number) => {
-    setLabData(labData.filter((_, i) => i !== index));
+  const handleDelete = (updatedLabData: LabData[]) => {
+    setLabData(updatedLabData);
   };
 
   return (
